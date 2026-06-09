@@ -1,0 +1,373 @@
+.counselling{
+  background:#f8f9fb;
+}
+
+/* HERO */
+
+.counselling-hero{
+  background:#041B44;
+  color:white;
+  text-align:center;
+
+  padding: 80px 20px;
+}
+
+.counselling-hero h1{
+  font-size:48px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.counselling-hero p{
+  max-width:800px;
+  margin:auto;
+  font-size:20px;
+  line-height:1.8;
+  color:#d8d8d8;
+}
+
+.counselling-hero button{
+  margin-top:35px;
+
+  background:#EFB11D;
+  color:#041B44;
+
+  border:none;
+  padding:16px 35px;
+
+  border-radius:10px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* SERVICES */
+
+.services{
+  padding:90px 80px;
+}
+
+.services h2{
+  text-align:center;
+  color:#041B44;
+  font-size:42px;
+  margin-bottom:50px;
+}
+
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:25px;
+}
+
+.service-card{
+  background:white;
+  padding:35px;
+
+  border-radius:18px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+  transition:.3s;
+}
+
+.service-card:hover{
+  transform:translateY(-8px);
+}
+
+.service-card h3{
+  color:#041B44;
+  margin-bottom:15px;
+  font-size:24px;
+}
+
+.service-card p{
+  color:#666;
+  line-height:1.7;
+}
+
+/* ROADMAP */
+
+.timeline{
+  background:#eef2f7;
+  padding:90px 80px;
+}
+
+.timeline h2{
+  text-align:center;
+  color:#041B44;
+  font-size:42px;
+  margin-bottom:60px;
+}
+
+.timeline-box{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:20px;
+}
+
+.timeline-box div{
+  background:white;
+  padding:25px;
+
+  text-align:center;
+
+  border-radius:14px;
+
+  box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+  font-weight:600;
+}
+
+/* FORM */
+
+/* COUNSELLOR + BOOKING */
+
+.counsellor-booking{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  gap:70px;
+
+  padding:100px 80px;
+
+  background:white;
+
+  align-items:center;
+}
+
+.mentor-section{
+  display:flex;
+  align-items:center;
+  gap:35px;
+
+  margin:0;
+  padding:0;
+  max-width:none;
+}
+
+.mentor-image img{
+  width:340px;
+  height:420px;
+
+  object-fit:cover;
+
+  border-radius:20px;
+
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+.mentor-content{
+  flex:1;
+}
+
+.mentor-content h2{
+  color:#041B44;
+  font-size:38px;
+  margin-bottom:12px;
+}
+
+.mentor-content h3{
+  color:#EFB11D;
+  font-size:28px;
+  margin-bottom:10px;
+}
+
+.mentor-role{
+  color:#666;
+  margin-bottom:20px;
+}
+
+.mentor-points{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.mentor-points p{
+  color:#041B44;
+  font-weight:600;
+}
+
+.booking-right h2{
+  text-align:center;
+  color:#041B44;
+  font-size:38px;
+  margin-bottom:30px;
+}
+
+.booking-right form{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.booking-right input{
+  padding:18px;
+
+  border:1px solid #ddd;
+  border-radius:10px;
+
+  font-size:16px;
+}
+
+.booking-right button{
+  background:#041B44;
+  color:white;
+
+  border:none;
+  padding:18px;
+
+  border-radius:10px;
+
+  font-size:16px;
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+.booking-right button:hover{
+  background:#06265f;
+}
+
+.whatsapp-cta{
+  text-align:center;
+  margin-top:30px;
+}
+
+.whatsapp-cta a{
+  display:inline-block;
+
+  background:#25D366;
+  color:white;
+
+  padding:15px 35px;
+
+  border-radius:10px;
+
+  text-decoration:none;
+  font-weight:700;
+}
+/* WHY US */
+
+.why-us{
+  padding:90px 80px;
+  background:white;
+}
+
+.why-us h2{
+  text-align:center;
+  color:#041B44;
+  font-size:42px;
+  margin-bottom:50px;
+}
+
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:25px;
+}
+
+.why-card{
+  background:#f8f9fb;
+  padding:35px;
+  border-radius:18px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+  text-align:center;
+  transition:.3s;
+}
+
+.why-card:hover{
+  transform:translateY(-8px);
+}
+
+.why-card h3{
+  color:#041B44;
+  margin-bottom:15px;
+}
+
+.why-card p{
+  color:#666;
+  line-height:1.7;
+}
+.whatsapp-cta{
+  text-align:center;
+  margin-top:50px;
+}
+
+.whatsapp-cta h3{
+  color:#041B44;
+  margin-bottom:20px;
+}
+
+.whatsapp-cta a{
+  display:inline-block;
+
+  background:#25D366;
+  color:white;
+
+  padding:15px 35px;
+
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* MENTOR SECTION */
+
+.mentor-section{
+  max-width:1200px;
+  margin:90px auto;
+  padding:0 20px;
+
+  display:flex;
+  align-items:center;
+  gap:70px;
+}
+
+.mentor-image img{
+  width:320px;
+  height:380px;
+
+  object-fit:cover;
+
+  border-radius:20px;
+
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+.mentor-content{
+  flex:1;
+}
+
+.mentor-content h2{
+  color:#041B44;
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.mentor-content h3{
+  color:#EFB11D;
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+.mentor-role{
+  color:#666;
+  font-size:18px;
+  margin-bottom:25px;
+}
+
+.mentor-points{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.mentor-points p{
+  color:#041B44;
+  font-size:18px;
+  font-weight:500;
+}

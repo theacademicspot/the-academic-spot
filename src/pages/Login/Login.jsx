@@ -1,0 +1,103 @@
+import "./Login.css";
+import Navbar from "../../components/Navbar/Navbar";
+import { useState } from "react";
+import axios from "axios";
+
+function Login() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/login`,
+        {
+          email,
+          password,
+        }
+      );
+       localStorage.setItem(
+  "user",
+  JSON.stringify(res.data)
+);
+
+      alert("Login Successful");
+      window.location.href = "/";
+     
+
+      console.log(res.data);
+
+    } catch (err) {
+
+      console.log(err);
+
+      alert("Invalid Email Or Password");
+
+    }
+  };
+
+  return (
+    <>
+      <Navbar />
+
+      <div className="login-page">
+
+        <div className="login-card">
+
+          <h1>Welcome Back</h1>
+
+          <p>
+            Login to access Mock Tests, DPPs,
+            College Predictor and Counselling.
+          </p>
+
+          <form onSubmit={handleSubmit}>
+
+            <input
+              type="email"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+            />
+
+            <button type="submit">
+              Login
+            </button>
+            <p
+  style={{
+    marginTop:"15px",
+    cursor:"pointer",
+    color:"blue"
+  }}
+  onClick={() =>
+    window.location.href="/forgot-password"
+  }
+>
+  Forgot Password?
+</p>
+
+          </form>
+
+        </div>
+
+      </div>
+    </>
+  );
+}
+
+export default Login;
