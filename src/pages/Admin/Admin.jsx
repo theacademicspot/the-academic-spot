@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../../components/Navbar/Navbar";
-const user = JSON.parse(
-  localStorage.getItem("user")
-);
-
-if (user?.role !== "admin") {
-  return <h1>Access Denied</h1>;
-}
 
 function Admin() {
+
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+  if (user?.role !== "admin") {
+    return <h1>Access Denied</h1>;
+  }
 
   const [stats, setStats] = useState({
     totalUsers: 0,
@@ -20,17 +21,13 @@ function Admin() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-
     fetchStats();
     fetchLeads();
     fetchUsers();
-
   }, []);
 
   const fetchStats = async () => {
-
     try {
-
       const res = await axios.get(
         `${import.meta.env.VITE_API_URL}/admin/stats`
       );
@@ -38,15 +35,11 @@ function Admin() {
       setStats(res.data);
 
     } catch (err) {
-
       console.log(err);
-
     }
-
   };
 
   const fetchLeads = async () => {
-
     try {
 
       const res = await axios.get(
@@ -56,40 +49,11 @@ function Admin() {
       setLeads(res.data);
 
     } catch (err) {
-
       console.log(err);
-
     }
-
   };
-  const deleteLead = async (id) => {
-
-  const confirmDelete = window.confirm(
-    "Are you sure?"
-  );
-
-  if (!confirmDelete) return;
-
-  try {
-
-    await axios.delete(
-      `${import.meta.env.VITE_API_URL}/admin/leads/${id}`
-    );
-
-    fetchLeads();
-
-  } catch (err) {
-
-    console.log(err);
-
-    alert("Error deleting lead");
-
-  }
-
-};
 
   const fetchUsers = async () => {
-
     try {
 
       const res = await axios.get(
@@ -99,11 +63,31 @@ function Admin() {
       setUsers(res.data);
 
     } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteLead = async (id) => {
+
+    const confirmDelete =
+      window.confirm("Are you sure?");
+
+    if (!confirmDelete) return;
+
+    try {
+
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/admin/leads/${id}`
+      );
+
+      fetchLeads();
+
+    } catch (err) {
 
       console.log(err);
+      alert("Error deleting lead");
 
     }
-
   };
 
   return (
@@ -187,12 +171,14 @@ function Admin() {
                   ).toLocaleString()}
                 </td>
                 <td>
-  <button
-    onClick={() => deleteLead(lead.id)}
-  >
-    Delete
-  </button>
-</td>
+                  <button
+                    onClick={() =>
+                      deleteLead(lead.id)
+                    }
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
 
             ))}
