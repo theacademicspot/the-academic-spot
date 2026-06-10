@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./db");
 const bcrypt = require("bcryptjs");
-
+const validator = require("validator");
 const app = express();
 console.log(process.env.PORT);
 
@@ -62,6 +62,38 @@ app.post("/signup", async (req, res) => {
       password,
     } = req.body;
 
+    // Name Validation
+
+    if (!name || name.trim().length < 3) {
+      return res.status(400).json({
+        message: "Name must be at least 3 characters"
+      });
+    }
+
+    // Email Validation
+
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({
+        message: "Invalid Email Address"
+      });
+    }
+
+    // Mobile Validation
+
+    if (!/^[6-9]\d{9}$/.test(mobile)) {
+      return res.status(400).json({
+        message: "Invalid Mobile Number"
+      });
+    }
+
+    // Password Validation
+
+    if (password.length < 8) {
+      return res.status(400).json({
+        message: "Password must be at least 8 characters"
+      });
+    }
+
     const existingUser = await pool.query(
       "SELECT * FROM users WHERE email = $1",
       [email]
@@ -69,7 +101,7 @@ app.post("/signup", async (req, res) => {
 
     if (existingUser.rows.length > 0) {
       return res.status(400).json({
-        message: "Email Already Exists",
+        message: "Email Already Exists"
       });
     }
 
@@ -77,15 +109,17 @@ app.post("/signup", async (req, res) => {
       await bcrypt.hash(password, 10);
 
     const user = await pool.query(
-      `INSERT INTO users
+      `
+      INSERT INTO users
       (name, email, mobile, password)
       VALUES ($1, $2, $3, $4)
-      RETURNING *`,
+      RETURNING *
+      `,
       [
         name,
         email,
         mobile,
-        hashedPassword,
+        hashedPassword
       ]
     );
 
@@ -96,50 +130,7 @@ app.post("/signup", async (req, res) => {
     console.log(err);
 
     res.status(500).json({
-      error: err.message,
-    });
-
-  }
-});
-
-/* LOGIN */
-
-app.post("/login", async (req, res) => {
-  try {
-
-    const { email, password } = req.body;
-
-    const user = await pool.query(
-      "SELECT * FROM users WHERE email = $1",
-      [email]
-    );
-
-    if (user.rows.length === 0) {
-      return res.status(400).json({
-        message: "User Not Found",
-      });
-    }
-
-    const validPassword =
-      await bcrypt.compare(
-        password,
-        user.rows[0].password
-      );
-
-    if (!validPassword) {
-      return res.status(400).json({
-        message: "Wrong Password",
-      });
-    }
-
-    res.json(user.rows[0]);
-
-  } catch (err) {
-
-    console.log(err);
-
-    res.status(500).json({
-      error: err.message,
+      error: err.message
     });
 
   }
