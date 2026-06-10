@@ -5,7 +5,7 @@ function App() {
 
 useEffect(() => {
 
-```
+
 // Disable Ctrl + P
 
 const handleKeyDown = (e) => {
@@ -59,7 +59,7 @@ return () => {
   );
 
 };
-```
+
 
 }, []);
 
