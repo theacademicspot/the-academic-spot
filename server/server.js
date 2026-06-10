@@ -136,6 +136,63 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+/* LOGIN */
+
+app.post("/login", async (req, res) => {
+
+  try {
+
+    const { email, password } = req.body;
+
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({
+        message: "Invalid Email Address"
+      });
+    }
+
+    if (!password || password.length < 8) {
+      return res.status(400).json({
+        message: "Invalid Password"
+      });
+    }
+
+    const user = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
+
+    if (user.rows.length === 0) {
+      return res.status(400).json({
+        message: "User Not Found"
+      });
+    }
+
+    const validPassword =
+      await bcrypt.compare(
+        password,
+        user.rows[0].password
+      );
+
+    if (!validPassword) {
+      return res.status(400).json({
+        message: "Wrong Password"
+      });
+    }
+
+    res.json(user.rows[0]);
+
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+
+  }
+
+});
+
 /* COLLEGE PREDICTOR */
 
 app.get("/predict/:percentile/:category", async (req, res) => {

@@ -9,36 +9,57 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
+  // Email Validation
 
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/login`,
-        {
-          email,
-          password,
-        }
-      );
-       localStorage.setItem(
-  "user",
-  JSON.stringify(res.data)
-);
+  const emailRegex =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      alert("Login Successful");
-      window.location.href = "/";
-     
+  if (!emailRegex.test(email)) {
+    alert("Enter Valid Email Address");
+    return;
+  }
 
-      console.log(res.data);
+  // Password Validation
 
-    } catch (err) {
+  if (password.length < 8) {
+    alert(
+      "Password must be at least 8 characters"
+    );
+    return;
+  }
 
-      console.log(err);
+  try {
 
-      alert("Invalid Email Or Password");
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/login`,
+      {
+        email,
+        password,
+      }
+    );
 
-    }
-  };
+    localStorage.setItem(
+      "user",
+      JSON.stringify(res.data)
+    );
+
+    alert("Login Successful");
+
+    window.location.href = "/";
+
+  } catch (err) {
+
+    console.log(err);
+
+    alert(
+      err.response?.data?.message ||
+      "Login Failed"
+    );
+
+  }
+};
 
   return (
     <>
