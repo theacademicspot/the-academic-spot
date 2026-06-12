@@ -27,23 +27,16 @@
   font-size:16px;
 }
 
-@media(max-width:900px){
-
-.stats{
-  grid-template-columns:repeat(2,1fr);
-  gap:30px;
-}
-
-.stat-card{
-  border:none;
-}
-
-}
 @media(max-width:600px){
 
 .stats{
   grid-template-columns:1fr;
   padding:30px 20px;
+  gap:25px;
+}
+
+.stat-card{
+  border:none;
 }
 
 .stat-card h2{
