@@ -2,6 +2,7 @@ import "./Login.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useState } from "react";
 import axios from "axios";
+import { GoogleLogin } from "@react-oauth/google";
 
 function Login() {
 
@@ -112,10 +113,54 @@ function Login() {
   Forgot Password?
 </p>
 
+          
           </form>
 
-        </div>
+<div style={{ marginTop: "20px" }}>
+ <GoogleLogin
+  onSuccess={async (
+    credentialResponse
+  ) => {
 
+    try {
+
+      const res =
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/google-login`,
+          {
+            credential:
+              credentialResponse.credential
+          }
+        );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data)
+      );
+
+      alert(
+        "Google Login Successful"
+      );
+
+      window.location.href = "/";
+
+    } catch (err) {
+
+      alert(
+        "Google Login Failed"
+      );
+
+    }
+
+  }}
+  onError={() => {
+    alert(
+      "Google Login Failed"
+    );
+  }}
+/>
+        </div>
+</div>
       </div>
     </>
   );

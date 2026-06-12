@@ -6,6 +6,14 @@ const pool = require("./db");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const app = express();
+const {
+  OAuth2Client
+} = require("google-auth-library");
+
+const client =
+  new OAuth2Client(
+    process.env.GOOGLE_CLIENT_ID
+  );
 console.log(process.env.PORT);
 
 app.use(cors());
@@ -187,6 +195,71 @@ app.post("/login", async (req, res) => {
 
     res.status(500).json({
       error: err.message
+    });
+
+  }
+
+});
+
+app.post("/google-login", async (req, res) => {
+
+  try {
+
+    const { credential } = req.body;
+
+    const ticket =
+      await client.verifyIdToken({
+        idToken: credential,
+        audience:
+          process.env.GOOGLE_CLIENT_ID,
+      });
+
+    const payload =
+      ticket.getPayload();
+
+    const {
+      name,
+      email
+    } = payload;
+
+    let user =
+      await pool.query(
+        "SELECT * FROM users WHERE email=$1",
+        [email]
+      );
+
+    if (user.rows.length === 0) {
+
+      const newUser =
+        await pool.query(
+          `
+          INSERT INTO users
+          (name,email,mobile,password)
+          VALUES($1,$2,$3,$4)
+          RETURNING *
+          `,
+          [
+            name,
+            email,
+            "",
+            "google_login"
+          ]
+        );
+
+      return res.json(
+        newUser.rows[0]
+      );
+    }
+
+    res.json(user.rows[0]);
+
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(500).json({
+      message:
+        "Google Login Failed"
     });
 
   }
