@@ -80,19 +80,21 @@ app.post("/send-otp", async (req, res) => {
     );
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS,
   },
 });
+
 await transporter.verify();
 console.log("SMTP Connected");
 
+
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+  from: process.env.BREVO_USER,
       to: email,
       subject: "Academic Spot OTP",
       text: `Your OTP is ${otp}`
