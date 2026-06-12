@@ -6,6 +6,8 @@ const pool = require("./db");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const app = express();
+const nodemailer = require("nodemailer");
+
 const {
   OAuth2Client
 } = require("google-auth-library");
@@ -57,7 +59,101 @@ app.post("/counselling", async (req, res) => {
 
   }
 });
+app.post("/send-otp", async (req, res) => {
 
+  try {
+
+    const { email } = req.body;
+
+    const otp =
+      Math.floor(
+        100000 + Math.random() * 900000
+      ).toString();
+
+    await pool.query(
+      `
+      INSERT INTO otp_verifications
+      (email, otp)
+      VALUES ($1,$2)
+      `,
+      [email, otp]
+    );
+
+    const transporter =
+      nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        }
+      });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Academic Spot OTP",
+      text: `Your OTP is ${otp}`
+    });
+
+    res.json({
+      message: "OTP Sent"
+    });
+
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(500).json({
+      message: "OTP Failed"
+    });
+
+  }
+
+});
+
+app.post("/verify-otp", async (req, res) => {
+
+  try {
+
+    const { email, otp } = req.body;
+
+    const result = await pool.query(
+      `
+      SELECT *
+      FROM otp_verifications
+      WHERE email = $1
+      ORDER BY id DESC
+      LIMIT 1
+      `,
+      [email]
+    );
+
+    if (
+      result.rows.length === 0 ||
+      result.rows[0].otp !== otp
+    ) {
+
+      return res.status(400).json({
+        message: "Invalid OTP"
+      });
+
+    }
+
+    res.json({
+      message: "OTP Verified"
+    });
+
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(500).json({
+      message: "Verification Failed"
+    });
+
+  }
+
+});
 /* SIGNUP */
 
 app.post("/signup", async (req, res) => {
