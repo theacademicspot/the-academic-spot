@@ -10,6 +10,7 @@
 
 .hero-left{
   flex:1;
+  word-break:break-word;
 }
 
 .badge{
@@ -129,9 +130,9 @@
   text-align:center;
 }
 
-.hero-left p{
-  font-size:16px;
-  text-align:center;
+.hero-left h1{
+  font-size:34px;
+  line-height:1.2;
 }
 
 .badge{
@@ -145,39 +146,10 @@
 
 }
 
-@media (max-width: 768px){
+*{
+  box-sizing:border-box;
+}
 
-  .hero{
-    flex-direction:column;
-    padding:40px 20px;
-    gap:30px;
-  }
-
-  .hero-left h1{
-    font-size:38px;
-    line-height:1.1;
-  }
-
-  .hero-left p{
-    font-size:18px;
-  }
-
-  .hero-buttons{
-    flex-direction:column;
-  }
-
-  .primary-btn,
-  .secondary-btn{
-    width:100%;
-  }
-
-  .hero-image{
-    max-width:100%;
-  }
-
-  .hero-card{
-    position:static;
-    width:100%;
-    margin-top:20px;
-  }
+body{
+  overflow-x:hidden;
 }
