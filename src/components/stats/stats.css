@@ -39,3 +39,15 @@
 }
 
 }
+@media(max-width:600px){
+
+.stats{
+  grid-template-columns:1fr;
+  padding:30px 20px;
+}
+
+.stat-card h2{
+  font-size:34px;
+}
+
+}

@@ -125,10 +125,18 @@
   padding:40px 25px;
 }
 
-.hero-left h1{
-  font-size:42px;
+.hero-left{
+  text-align:center;
 }
 
+.hero-left p{
+  font-size:16px;
+  text-align:center;
+}
+
+.badge{
+  font-size:12px;
+}
 .hero-card{
   position:static;
   margin-top:20px;

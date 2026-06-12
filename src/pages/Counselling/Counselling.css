@@ -371,3 +371,24 @@
   font-size:18px;
   font-weight:500;
 }
+
+@media(max-width:768px){
+
+.cta{
+  margin:20px;
+  padding:30px 20px;
+
+  flex-direction:column;
+  text-align:center;
+  gap:25px;
+}
+
+.cta h2{
+  font-size:30px;
+}
+
+.cta button{
+  width:100%;
+}
+
+}

@@ -31,3 +31,24 @@
   font-weight:700;
   cursor:pointer;
 }
+
+@media(max-width:768px){
+
+.cta{
+  margin:20px;
+  padding:30px 20px;
+
+  flex-direction:column;
+  text-align:center;
+  gap:25px;
+}
+
+.cta h2{
+  font-size:30px;
+}
+
+.cta button{
+  width:100%;
+}
+
+}
