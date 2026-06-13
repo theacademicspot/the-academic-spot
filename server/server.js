@@ -407,11 +407,35 @@ app.get("/predict/:percentile/:category", async (req, res) => {
   }
 
 });
-app.post("/forgot-password", async (req, res) => {
+app.post("/reset-password", async (req, res) => {
 
   try {
 
-    const { email, password } = req.body;
+    const {
+      email,
+      otp,
+      password
+    } = req.body;
+
+    const result = await pool.query(
+      `
+      SELECT *
+      FROM otp_verifications
+      WHERE email = $1
+      ORDER BY id DESC
+      LIMIT 1
+      `,
+      [email]
+    );
+
+    if (
+      result.rows.length === 0 ||
+      result.rows[0].otp !== otp
+    ) {
+      return res.status(400).json({
+        message: "Invalid OTP"
+      });
+    }
 
     const hashedPassword =
       await bcrypt.hash(password, 10);
@@ -434,7 +458,7 @@ app.post("/forgot-password", async (req, res) => {
     console.log(err);
 
     res.status(500).json({
-      error: err.message
+      message: "Error"
     });
 
   }

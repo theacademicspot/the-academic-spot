@@ -6,30 +6,72 @@ import axios from "axios";
 function ForgotPassword() {
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  const [confirmPassword,
+    setConfirmPassword] =
+    useState("");
+
+  const sendOtp = async () => {
+
+    try {
+
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/send-otp`,
+        { email }
+      );
+
+      alert("OTP Sent");
+
+    } catch (err) {
+
+      alert("Failed To Send OTP");
+
+    }
+
+  };
 
   const handleSubmit = async (e) => {
 
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+
+      alert(
+        "Passwords Do Not Match"
+      );
+
+      return;
+
+    }
+
     try {
 
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/forgot-password`,
+        `${import.meta.env.VITE_API_URL}/reset-password`,
         {
           email,
-          password,
+          otp,
+          password
         }
       );
 
-      alert("Password Updated");
+      alert(
+        "Password Updated Successfully"
+      );
 
-      window.location.href = "/login";
+      window.location.href =
+        "/login";
 
     } catch (err) {
 
-      console.log(err);
-      alert("Error");
+      alert(
+        err.response?.data?.message ||
+        "Error"
+      );
 
     }
 
@@ -43,7 +85,9 @@ function ForgotPassword() {
 
         <div className="forgot-card">
 
-          <h1>Reset Password</h1>
+          <h1>
+            Reset Password
+          </h1>
 
           <form onSubmit={handleSubmit}>
 
@@ -52,7 +96,27 @@ function ForgotPassword() {
               placeholder="Email"
               value={email}
               onChange={(e) =>
-                setEmail(e.target.value)
+                setEmail(
+                  e.target.value
+                )
+              }
+            />
+
+            <button
+              type="button"
+              onClick={sendOtp}
+            >
+              Send OTP
+            </button>
+
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) =>
+                setOtp(
+                  e.target.value
+                )
               }
             />
 
@@ -61,7 +125,20 @@ function ForgotPassword() {
               placeholder="New Password"
               value={password}
               onChange={(e) =>
-                setPassword(e.target.value)
+                setPassword(
+                  e.target.value
+                )
+              }
+            />
+
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) =>
+                setConfirmPassword(
+                  e.target.value
+                )
               }
             />
 
@@ -74,6 +151,7 @@ function ForgotPassword() {
         </div>
 
       </div>
+
     </>
   );
 }
