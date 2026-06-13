@@ -91,60 +91,33 @@ function ForgotPassword() {
 
           <form onSubmit={handleSubmit}>
 
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) =>
-                setEmail(
-                  e.target.value
-                )
-              }
-            />
+           <input
+  type="email"
+  placeholder="Email Address"
+/>
 
-            <button
-              type="button"
-              onClick={sendOtp}
-            >
-              Send OTP
-            </button>
+<button type="button">
+  Send OTP
+</button>
 
-            <input
-              type="text"
-              placeholder="Enter OTP"
-              value={otp}
-              onChange={(e) =>
-                setOtp(
-                  e.target.value
-                )
-              }
-            />
+<input
+  type="text"
+  placeholder="Enter OTP"
+/>
 
-            <input
-              type="password"
-              placeholder="New Password"
-              value={password}
-              onChange={(e) =>
-                setPassword(
-                  e.target.value
-                )
-              }
-            />
+<input
+  type="password"
+  placeholder="New Password"
+/>
 
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) =>
-                setConfirmPassword(
-                  e.target.value
-                )
-              }
-            />
+<input
+  type="password"
+  placeholder="Confirm Password"
+/>
 
-            <button type="submit">
-              Update Password
-            </button>
+<button type="submit">
+  Update Password
+</button>
 
           </form>
 
