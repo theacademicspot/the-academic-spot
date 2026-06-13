@@ -95,7 +95,7 @@ console.log("SMTP Connected");
 console.log("BREVO_USER =", process.env.BREVO_USER);
 console.log("BREVO_PASS exists =", !!process.env.BREVO_PASS);
     await transporter.sendMail({
-  from: process.env.BREVO_USER,
+  from: '"The Academic Spot" <theacademicspots@gmail.com>',
       to: email,
       subject: "Academic Spot OTP",
       text: `Your OTP is ${otp}`
