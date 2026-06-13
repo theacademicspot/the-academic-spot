@@ -2,6 +2,7 @@ import "./Signup.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
 
@@ -9,7 +10,7 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
-
+const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const [otpVerified, setOtpVerified] =
     useState(false);
@@ -29,6 +30,7 @@ function Signup() {
       );
 
       alert("OTP Sent Successfully");
+      navigate("/login");
 
     } catch (err) {
 
