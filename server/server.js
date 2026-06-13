@@ -81,7 +81,7 @@ app.post("/send-otp", async (req, res) => {
 
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
-  port: 587,
+  port: 2525,
   secure: false,
   auth: {
     user: process.env.BREVO_USER,
@@ -92,7 +92,8 @@ const transporter = nodemailer.createTransport({
 await transporter.verify();
 console.log("SMTP Connected");
 
-
+console.log("BREVO_USER =", process.env.BREVO_USER);
+console.log("BREVO_PASS exists =", !!process.env.BREVO_PASS);
     await transporter.sendMail({
   from: process.env.BREVO_USER,
       to: email,
