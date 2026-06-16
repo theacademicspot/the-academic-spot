@@ -8,7 +8,9 @@ import CollegePredictor from "../pages/CollegePredictor/CollegePredictor";
 import Profile from "../pages/Profile/Profile";
 import Admin from "../pages/Admin/Admin";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
-
+import MockTests from "../pages/MockTests/MockTests";
+import MockExam from "../pages/MockExam/MockExam";
+import MockResult from "../pages/MockResult/MockResult";
 /* Normal User Protection */
 
 function ProtectedRoute({ children }) {
@@ -89,6 +91,18 @@ function AppRoutes() {
           </ProtectedAdminRoute>
         }
       />
+
+      <Route path="/mock-tests" element={<MockTests />} />
+
+<Route
+  path="/mock-exam/:id"
+  element={<MockExam />}
+/>
+
+<Route
+  path="/mock-result/:id"
+  element={<MockResult />}
+/>
 
     </Routes>
   );

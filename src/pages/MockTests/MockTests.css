@@ -1,0 +1,54 @@
+.mock-page{
+  min-height:100vh;
+  padding:40px;
+  background:#f4f7fb;
+}
+
+.mock-page h1{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.mock-grid{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(320px,1fr));
+  gap:25px;
+}
+
+.mock-card{
+  background:white;
+  border-radius:15px;
+  padding:25px;
+  box-shadow:
+  0 5px 20px rgba(0,0,0,0.08);
+}
+
+.mock-card h2{
+  margin-bottom:20px;
+  color:#1e3a8a;
+}
+
+.mock-card p{
+  margin:12px 0;
+}
+
+.mock-card span{
+  font-weight:bold;
+}
+
+.mock-card button{
+  width:100%;
+  margin-top:20px;
+  border:none;
+  padding:12px;
+  border-radius:10px;
+  cursor:pointer;
+  background:#2563eb;
+  color:white;
+  font-weight:bold;
+}
+
+.mock-card button:hover{
+  background:#1d4ed8;
+}
