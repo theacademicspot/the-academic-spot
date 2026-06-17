@@ -57,17 +57,17 @@ function MockExam() {
           100
         ).toFixed(2);
 
-    localStorage.setItem(
-      "mockResult",
-      JSON.stringify({
-        correct,
-        wrong,
-        skipped,
-        total: questions.length,
-        accuracy
-      })
-    );
-
+   localStorage.setItem(
+  "mockResult",
+  JSON.stringify({
+    correct,
+    wrong,
+    skipped,
+    total: questions.length,
+    accuracy,
+    studentAnswers: answers
+  })
+);
     navigate(
       `/mock-result/${id}`
     );
