@@ -15,33 +15,71 @@ function MockExam() {
 
   return (
 
-    <div className="mock-exam">
+    <div className="exam-page">
 
-      <h1>
-        Mock Test {id}
-      </h1>
+      <div className="exam-header">
 
-      <h2>
-        Question {currentQuestion + 1}
-      </h2>
+        <h2>
+          MHT CET Mock Test {id}
+        </h2>
 
-      <p>
-        {question.question}
-      </p>
+        <h3>
+          03:00:00
+        </h3>
 
-      <div>
+      </div>
 
-        {question.options.map(
-          (option, index) => (
+      <div className="exam-body">
 
-            <button
-              key={index}
-            >
-              {option}
-            </button>
+        <div className="exam-left">
 
-          )
-        )}
+          <h3>
+            Question {currentQuestion + 1}
+          </h3>
+
+          <p>
+            {question.question}
+          </p>
+
+          <div className="options">
+
+            {question.options.map(
+              (option, index) => (
+
+                <button
+                  key={index}
+                >
+                  {option}
+                </button>
+
+              )
+            )}
+
+          </div>
+
+        </div>
+
+        <div className="exam-right">
+
+          <h3>
+            Questions
+          </h3>
+
+          {
+            questions.map(
+              (q, index) => (
+
+                <button
+                  key={index}
+                >
+                  {index + 1}
+                </button>
+
+              )
+            )
+          }
+
+        </div>
 
       </div>
 

@@ -1,0 +1,60 @@
+.exam-page{
+  min-height:100vh;
+  background:#f5f7fb;
+}
+
+.exam-header{
+  height:80px;
+  background:white;
+  border-bottom:1px solid #ddd;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 30px;
+}
+
+.exam-body{
+  display:flex;
+  height:calc(100vh - 80px);
+}
+
+.exam-left{
+  flex:3;
+  padding:30px;
+}
+
+.exam-right{
+  flex:1;
+  background:white;
+  border-left:1px solid #ddd;
+  padding:20px;
+}
+
+.options{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  margin-top:20px;
+}
+
+.options button{
+  padding:15px;
+  border:none;
+  background:white;
+  border-radius:10px;
+  cursor:pointer;
+  text-align:left;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.exam-right button{
+  width:50px;
+  height:50px;
+  margin:5px;
+  border:none;
+  border-radius:8px;
+  background:#e5e7eb;
+  cursor:pointer;
+}
