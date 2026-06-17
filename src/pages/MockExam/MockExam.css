@@ -101,3 +101,18 @@
   font-weight:600;
   margin-bottom:20px;
 }
+
+.review-question {
+  background: purple;
+  color: white;
+}
+
+.answered-question {
+  background: green;
+  color: white;
+}
+
+.current-question {
+  background: #2563eb;
+  color: white;
+}

@@ -1,6 +1,6 @@
 import "./MockExam.css";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import questions from "./data/questions";
 
 function MockExam() {
@@ -13,8 +13,53 @@ function MockExam() {
   const [answers, setAnswers] =
     useState({});
 
+  const [timeLeft, setTimeLeft] =
+    useState(10800);
+
+  const [reviewQuestions, setReviewQuestions] =
+    useState([]);
+
   const question =
     questions[currentQuestion];
+
+  useEffect(() => {
+
+    const timer = setInterval(() => {
+
+      setTimeLeft((prev) => {
+
+        if (prev <= 1) {
+
+          clearInterval(timer);
+
+          return 0;
+
+        }
+
+        return prev - 1;
+
+      });
+
+    }, 1000);
+
+    return () => clearInterval(timer);
+
+  }, []);
+
+  const hours =
+    String(Math.floor(timeLeft / 3600))
+      .padStart(2, "0");
+
+  const minutes =
+    String(
+      Math.floor(
+        (timeLeft % 3600) / 60
+      )
+    ).padStart(2, "0");
+
+  const seconds =
+    String(timeLeft % 60)
+      .padStart(2, "0");
 
   const selectOption = (optionIndex) => {
 
@@ -22,6 +67,76 @@ function MockExam() {
       ...answers,
       [currentQuestion]: optionIndex
     });
+
+  };
+
+  const markForReview = () => {
+
+    if (
+      !reviewQuestions.includes(
+        currentQuestion
+      )
+    ) {
+
+      setReviewQuestions([
+        ...reviewQuestions,
+        currentQuestion
+      ]);
+
+    }
+
+  };
+
+  const nextQuestion = () => {
+
+    if (
+      currentQuestion <
+      questions.length - 1
+    ) {
+
+      setCurrentQuestion(
+        currentQuestion + 1
+      );
+
+    }
+
+  };
+
+  const prevQuestion = () => {
+
+    if (
+      currentQuestion > 0
+    ) {
+
+      setCurrentQuestion(
+        currentQuestion - 1
+      );
+
+    }
+
+  };
+
+  const submitTest = () => {
+
+    let score = 0;
+
+    questions.forEach(
+      (q, index) => {
+
+        if (
+          answers[index] === q.answer
+        ) {
+
+          score++;
+
+        }
+
+      }
+    );
+
+    alert(
+      `Test Submitted\nScore: ${score}/${questions.length}`
+    );
 
   };
 
@@ -36,7 +151,7 @@ function MockExam() {
         </h2>
 
         <h3>
-          03:00:00
+          {hours}:{minutes}:{seconds}
         </h3>
 
       </div>
@@ -80,41 +195,36 @@ function MockExam() {
           <div className="exam-actions">
 
             <button
-              onClick={() => {
-
-                if (
-                  currentQuestion > 0
-                ) {
-
-                  setCurrentQuestion(
-                    currentQuestion - 1
-                  );
-
-                }
-
-              }}
+              onClick={prevQuestion}
             >
               Previous
             </button>
 
             <button
-              onClick={() => {
-
-                if (
-                  currentQuestion <
-                  questions.length - 1
-                ) {
-
-                  setCurrentQuestion(
-                    currentQuestion + 1
-                  );
-
-                }
-
-              }}
+              onClick={markForReview}
             >
-              Save & Next
+              Mark Review
             </button>
+
+            {
+              currentQuestion ===
+              questions.length - 1
+                ?
+
+                <button
+                  onClick={submitTest}
+                >
+                  Submit Test
+                </button>
+
+                :
+
+                <button
+                  onClick={nextQuestion}
+                >
+                  Save & Next
+                </button>
+            }
 
           </div>
 
@@ -139,9 +249,13 @@ function MockExam() {
                   className={
                     currentQuestion === index
                       ? "current-question"
-                      : answers[index] !== undefined
-                        ? "answered-question"
-                        : ""
+                      : reviewQuestions.includes(
+                        index
+                      )
+                        ? "review-question"
+                        : answers[index] !== undefined
+                          ? "answered-question"
+                          : ""
                   }
                 >
                   {index + 1}
