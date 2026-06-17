@@ -1,14 +1,30 @@
 import "./MockResult.css";
+import { useNavigate } from "react-router-dom";
 
 function MockResult() {
+
+  const navigate = useNavigate();
 
   const result = JSON.parse(
     localStorage.getItem("mockResult")
   );
 
   if (!result) {
-    return <h2>No Result Found</h2>;
+
+    return (
+      <div className="result-page">
+        <h2>No Result Found</h2>
+      </div>
+    );
+
   }
+
+  const percentage =
+    (
+      (result.correct /
+        result.total) *
+      100
+    ).toFixed(2);
 
   return (
 
@@ -17,37 +33,61 @@ function MockResult() {
       <div className="result-card">
 
         <h1>
-          Mock Test Result
+          🎉 Mock Test Result
         </h1>
 
-        <h2>
+        <h2 className="score-text">
           Score :
           {result.correct}
           /
           {result.total}
         </h2>
 
+        <div className="percentage-box">
+          {percentage}%
+        </div>
+
         <div className="result-grid">
 
-          <div>
-            Correct:
-            {result.correct}
+          <div className="result-item">
+            <h3>✅ Correct</h3>
+            <p>{result.correct}</p>
           </div>
 
-          <div>
-            Wrong:
-            {result.wrong}
+          <div className="result-item">
+            <h3>❌ Wrong</h3>
+            <p>{result.wrong}</p>
           </div>
 
-          <div>
-            Skipped:
-            {result.skipped}
+          <div className="result-item">
+            <h3>⏭️ Skipped</h3>
+            <p>{result.skipped}</p>
           </div>
 
-          <div>
-            Accuracy:
-            {result.accuracy}%
+          <div className="result-item">
+            <h3>🎯 Accuracy</h3>
+            <p>{result.accuracy}%</p>
           </div>
+
+        </div>
+
+        <div className="result-buttons">
+
+          <button
+            onClick={() =>
+              navigate("/mock-tests")
+            }
+          >
+            Back To Tests
+          </button>
+
+          <button
+            onClick={() =>
+              navigate("/dashboard")
+            }
+          >
+            Dashboard
+          </button>
 
         </div>
 

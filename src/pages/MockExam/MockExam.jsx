@@ -1,12 +1,14 @@
 import "./MockExam.css";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import questions from "./data/questions";
 import { useNavigate } from "react-router-dom";
+import questions from "./data/questions";
 
 function MockExam() {
-const navigate = useNavigate();
+
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const [currentQuestion, setCurrentQuestion] =
     useState(0);
@@ -14,14 +16,62 @@ const navigate = useNavigate();
   const [answers, setAnswers] =
     useState({});
 
-  const [timeLeft, setTimeLeft] =
-    useState(10800);
-
   const [reviewQuestions, setReviewQuestions] =
     useState([]);
 
+  const [timeLeft, setTimeLeft] =
+    useState(10800);
+
   const question =
     questions[currentQuestion];
+
+  const submitTest = () => {
+
+    let correct = 0;
+
+    questions.forEach((q, index) => {
+
+      if (
+        answers[index] === q.answer
+      ) {
+        correct++;
+      }
+
+    });
+
+    const wrong =
+      Object.keys(answers).length -
+      correct;
+
+    const skipped =
+      questions.length -
+      Object.keys(answers).length;
+
+    const accuracy =
+      Object.keys(answers).length === 0
+        ? 0
+        : (
+          (correct /
+            Object.keys(answers).length) *
+          100
+        ).toFixed(2);
+
+    localStorage.setItem(
+      "mockResult",
+      JSON.stringify({
+        correct,
+        wrong,
+        skipped,
+        total: questions.length,
+        accuracy
+      })
+    );
+
+    navigate(
+      `/mock-result/${id}`
+    );
+
+  };
 
   useEffect(() => {
 
@@ -33,6 +83,8 @@ const navigate = useNavigate();
 
           clearInterval(timer);
 
+          submitTest();
+
           return 0;
 
         }
@@ -43,13 +95,17 @@ const navigate = useNavigate();
 
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () =>
+      clearInterval(timer);
 
   }, []);
 
   const hours =
-    String(Math.floor(timeLeft / 3600))
-      .padStart(2, "0");
+    String(
+      Math.floor(
+        timeLeft / 3600
+      )
+    ).padStart(2, "0");
 
   const minutes =
     String(
@@ -59,14 +115,18 @@ const navigate = useNavigate();
     ).padStart(2, "0");
 
   const seconds =
-    String(timeLeft % 60)
-      .padStart(2, "0");
+    String(
+      timeLeft % 60
+    ).padStart(2, "0");
 
-  const selectOption = (optionIndex) => {
+  const selectOption = (
+    optionIndex
+  ) => {
 
     setAnswers({
       ...answers,
-      [currentQuestion]: optionIndex
+      [currentQuestion]:
+        optionIndex
     });
 
   };
@@ -116,50 +176,6 @@ const navigate = useNavigate();
     }
 
   };
-const submitTest = () => {
-
-  let correct = 0;
-
-  questions.forEach((q, index) => {
-
-    if (
-      answers[index] === q.answer
-    ) {
-      correct++;
-    }
-
-  });
-
-  const wrong =
-    Object.keys(answers).length - correct;
-
-  const skipped =
-    questions.length -
-    Object.keys(answers).length;
-
-  const accuracy =
-    Object.keys(answers).length === 0
-      ? 0
-      : (
-          (correct /
-            Object.keys(answers).length) *
-          100
-        ).toFixed(2);
-
-  localStorage.setItem(
-    "mockResult",
-    JSON.stringify({
-      correct,
-      wrong,
-      skipped,
-      total: questions.length,
-      accuracy
-    })
-  );
-
-  navigate("/mock-result/1");
-
-};
 
   return (
 
@@ -179,65 +195,79 @@ const submitTest = () => {
 
       <div className="exam-body">
 
-     <div className="exam-left">
+        <div className="exam-left">
 
-  <div className="question-card">
+          <div className="question-card">
 
-    <h3>
-      Question {currentQuestion + 1}
-    </h3>
+            <h3>
+              Question {currentQuestion + 1}
+            </h3>
 
-    <p className="question-text">
-      {question.question}
-    </p>
+            <p className="question-text">
+              {question.question}
+            </p>
 
-    <div className="options">
+            <div className="options">
 
-      {question.options.map(
-        (option, index) => (
+              {question.options.map(
+                (
+                  option,
+                  index
+                ) => (
 
-          <button
-            key={index}
-            onClick={() =>
-              selectOption(index)
-            }
-            className={
-              answers[currentQuestion] === index
-                ? "selected-option"
-                : ""
-            }
-          >
-            {option}
-          </button>
+                  <button
+                    key={index}
+                    onClick={() =>
+                      selectOption(
+                        index
+                      )
+                    }
+                    className={
+                      answers[
+                        currentQuestion
+                      ] === index
+                        ? "selected-option"
+                        : ""
+                    }
+                  >
+                    {option}
+                  </button>
 
-        )
-      )}
+                )
+              )}
 
-    </div>
+            </div>
 
-  </div>
+          </div>
 
-  <div className="exam-actions">
+          <div className="exam-actions">
 
             <button
-              onClick={prevQuestion}
+              onClick={
+                prevQuestion
+              }
             >
               Previous
             </button>
 
             <button
-              onClick={markForReview}
+              onClick={
+                markForReview
+              }
             >
               Mark Review
             </button>
 
             {
               currentQuestion ===
-              questions.length - 1
+                questions.length - 1
+
                 ?
 
                 <button
-                  onClick={submitTest}
+                  onClick={
+                    submitTest
+                  }
                 >
                   Submit Test
                 </button>
@@ -245,7 +275,9 @@ const submitTest = () => {
                 :
 
                 <button
-                  onClick={nextQuestion}
+                  onClick={
+                    nextQuestion
+                  }
                 >
                   Save & Next
                 </button>
@@ -256,34 +288,49 @@ const submitTest = () => {
         </div>
 
         <div className="exam-right">
-<div className="exam-stats">
 
-  <div className="stat-box">
-    <span>Answered</span>
-    <strong>
-      {
-        Object.keys(answers).length
-      }
-    </strong>
-  </div>
+          <div className="exam-stats">
 
-  <div className="stat-box">
-    <span>Review</span>
-    <strong>
-      {
-        reviewQuestions.length
-      }
-    </strong>
-  </div>
+            <div className="stat-box">
+              <span>
+                Answered
+              </span>
 
-  <div className="stat-box">
-    <span>Total</span>
-    <strong>
-      {questions.length}
-    </strong>
-  </div>
+              <strong>
+                {
+                  Object.keys(
+                    answers
+                  ).length
+                }
+              </strong>
+            </div>
 
-</div>
+            <div className="stat-box">
+              <span>
+                Review
+              </span>
+
+              <strong>
+                {
+                  reviewQuestions.length
+                }
+              </strong>
+            </div>
+
+            <div className="stat-box">
+              <span>
+                Total
+              </span>
+
+              <strong>
+                {
+                  questions.length
+                }
+              </strong>
+            </div>
+
+          </div>
+
           <h3>
             Questions
           </h3>
@@ -291,23 +338,52 @@ const submitTest = () => {
           <div className="question-palette">
 
             {questions.map(
-              (q, index) => (
+              (
+                q,
+                index
+              ) => (
 
                 <button
                   key={index}
                   onClick={() =>
-                    setCurrentQuestion(index)
+                    setCurrentQuestion(
+                      index
+                    )
                   }
                   className={
-                    currentQuestion === index
-                      ? "current-question"
-                      : reviewQuestions.includes(
+
+                    currentQuestion ===
+                      index
+
+                      ?
+
+                      "current-question"
+
+                      :
+
+                      reviewQuestions.includes(
                         index
                       )
-                        ? "review-question"
-                        : answers[index] !== undefined
-                          ? "answered-question"
-                          : ""
+
+                        ?
+
+                        "review-question"
+
+                        :
+
+                        answers[
+                          index
+                        ] !==
+                          undefined
+
+                          ?
+
+                          "answered-question"
+
+                          :
+
+                          ""
+
                   }
                 >
                   {index + 1}
