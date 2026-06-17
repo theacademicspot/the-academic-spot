@@ -2,9 +2,10 @@ import "./MockExam.css";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import questions from "./data/questions";
+import { useNavigate } from "react-router-dom";
 
 function MockExam() {
-
+const navigate = useNavigate();
   const { id } = useParams();
 
   const [currentQuestion, setCurrentQuestion] =
@@ -115,30 +116,50 @@ function MockExam() {
     }
 
   };
+const submitTest = () => {
 
-  const submitTest = () => {
+  let correct = 0;
 
-    let score = 0;
+  questions.forEach((q, index) => {
 
-    questions.forEach(
-      (q, index) => {
+    if (
+      answers[index] === q.answer
+    ) {
+      correct++;
+    }
 
-        if (
-          answers[index] === q.answer
-        ) {
+  });
 
-          score++;
+  const wrong =
+    Object.keys(answers).length - correct;
 
-        }
+  const skipped =
+    questions.length -
+    Object.keys(answers).length;
 
-      }
-    );
+  const accuracy =
+    Object.keys(answers).length === 0
+      ? 0
+      : (
+          (correct /
+            Object.keys(answers).length) *
+          100
+        ).toFixed(2);
 
-    alert(
-      `Test Submitted\nScore: ${score}/${questions.length}`
-    );
+  localStorage.setItem(
+    "mockResult",
+    JSON.stringify({
+      correct,
+      wrong,
+      skipped,
+      total: questions.length,
+      accuracy
+    })
+  );
 
-  };
+  navigate("/mock-result/1");
+
+};
 
   return (
 

@@ -1,0 +1,38 @@
+.result-page{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#f5f7fb;
+}
+
+.result-card{
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  width:600px;
+  text-align:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.1);
+}
+
+.result-card h1{
+  margin-bottom:20px;
+}
+
+.result-card h2{
+  color:#2563eb;
+}
+
+.result-grid{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.result-grid div{
+  background:#f8fafc;
+  padding:20px;
+  border-radius:10px;
+  font-weight:600;
+}
