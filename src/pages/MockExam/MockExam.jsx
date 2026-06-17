@@ -158,41 +158,45 @@ function MockExam() {
 
       <div className="exam-body">
 
-        <div className="exam-left">
+     <div className="exam-left">
 
-          <h3>
-            Question {currentQuestion + 1}
-          </h3>
+  <div className="question-card">
 
-          <p className="question-text">
-            {question.question}
-          </p>
+    <h3>
+      Question {currentQuestion + 1}
+    </h3>
 
-          <div className="options">
+    <p className="question-text">
+      {question.question}
+    </p>
 
-            {question.options.map(
-              (option, index) => (
+    <div className="options">
 
-                <button
-                  key={index}
-                  onClick={() =>
-                    selectOption(index)
-                  }
-                  className={
-                    answers[currentQuestion] === index
-                      ? "selected-option"
-                      : ""
-                  }
-                >
-                  {option}
-                </button>
+      {question.options.map(
+        (option, index) => (
 
-              )
-            )}
+          <button
+            key={index}
+            onClick={() =>
+              selectOption(index)
+            }
+            className={
+              answers[currentQuestion] === index
+                ? "selected-option"
+                : ""
+            }
+          >
+            {option}
+          </button>
 
-          </div>
+        )
+      )}
 
-          <div className="exam-actions">
+    </div>
+
+  </div>
+
+  <div className="exam-actions">
 
             <button
               onClick={prevQuestion}
