@@ -231,7 +231,34 @@ function MockExam() {
         </div>
 
         <div className="exam-right">
+<div className="exam-stats">
 
+  <div className="stat-box">
+    <span>Answered</span>
+    <strong>
+      {
+        Object.keys(answers).length
+      }
+    </strong>
+  </div>
+
+  <div className="stat-box">
+    <span>Review</span>
+    <strong>
+      {
+        reviewQuestions.length
+      }
+    </strong>
+  </div>
+
+  <div className="stat-box">
+    <span>Total</span>
+    <strong>
+      {questions.length}
+    </strong>
+  </div>
+
+</div>
           <h3>
             Questions
           </h3>
