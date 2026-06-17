@@ -58,3 +58,46 @@
   background:#e5e7eb;
   cursor:pointer;
 }
+
+.selected-option{
+  background:#2563eb !important;
+  color:white;
+}
+
+.exam-actions{
+  margin-top:30px;
+  display:flex;
+  gap:15px;
+}
+
+.exam-actions button{
+  padding:12px 25px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#2563eb;
+  color:white;
+  font-weight:600;
+}
+
+.question-palette{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.current-question{
+  background:#2563eb !important;
+  color:white;
+}
+
+.answered-question{
+  background:#16a34a !important;
+  color:white;
+}
+
+.question-text{
+  font-size:20px;
+  font-weight:600;
+  margin-bottom:20px;
+}

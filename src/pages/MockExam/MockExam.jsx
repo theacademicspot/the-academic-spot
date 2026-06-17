@@ -10,8 +10,20 @@ function MockExam() {
   const [currentQuestion, setCurrentQuestion] =
     useState(0);
 
+  const [answers, setAnswers] =
+    useState({});
+
   const question =
     questions[currentQuestion];
+
+  const selectOption = (optionIndex) => {
+
+    setAnswers({
+      ...answers,
+      [currentQuestion]: optionIndex
+    });
+
+  };
 
   return (
 
@@ -37,7 +49,7 @@ function MockExam() {
             Question {currentQuestion + 1}
           </h3>
 
-          <p>
+          <p className="question-text">
             {question.question}
           </p>
 
@@ -48,12 +60,61 @@ function MockExam() {
 
                 <button
                   key={index}
+                  onClick={() =>
+                    selectOption(index)
+                  }
+                  className={
+                    answers[currentQuestion] === index
+                      ? "selected-option"
+                      : ""
+                  }
                 >
                   {option}
                 </button>
 
               )
             )}
+
+          </div>
+
+          <div className="exam-actions">
+
+            <button
+              onClick={() => {
+
+                if (
+                  currentQuestion > 0
+                ) {
+
+                  setCurrentQuestion(
+                    currentQuestion - 1
+                  );
+
+                }
+
+              }}
+            >
+              Previous
+            </button>
+
+            <button
+              onClick={() => {
+
+                if (
+                  currentQuestion <
+                  questions.length - 1
+                ) {
+
+                  setCurrentQuestion(
+                    currentQuestion + 1
+                  );
+
+                }
+
+              }}
+            >
+              Save & Next
+            </button>
 
           </div>
 
@@ -65,19 +126,31 @@ function MockExam() {
             Questions
           </h3>
 
-          {
-            questions.map(
+          <div className="question-palette">
+
+            {questions.map(
               (q, index) => (
 
                 <button
                   key={index}
+                  onClick={() =>
+                    setCurrentQuestion(index)
+                  }
+                  className={
+                    currentQuestion === index
+                      ? "current-question"
+                      : answers[index] !== undefined
+                        ? "answered-question"
+                        : ""
+                  }
                 >
                   {index + 1}
                 </button>
 
               )
-            )
-          }
+            )}
+
+          </div>
 
         </div>
 
