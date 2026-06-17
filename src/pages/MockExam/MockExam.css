@@ -193,3 +193,33 @@
   }
 
 }
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:999;
+}
+
+.submit-modal{
+  width:400px;
+  background:white;
+  padding:30px;
+  border-radius:15px;
+}
+
+.modal-buttons{
+  margin-top:20px;
+
+  display:flex;
+  gap:10px;
+}
+
+.modal-buttons button{
+  flex:1;
+}

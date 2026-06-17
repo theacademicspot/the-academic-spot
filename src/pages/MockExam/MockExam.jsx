@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import questions from "./data/questions";
 
 function MockExam() {
-
+  const [showSubmitModal, setShowSubmitModal] =
+  useState(false);
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -264,13 +265,13 @@ function MockExam() {
 
                 ?
 
-                <button
-                  onClick={
-                    submitTest
-                  }
-                >
-                  Submit Test
-                </button>
+              <button
+  onClick={() =>
+    setShowSubmitModal(true)
+  }
+>
+  Submit Test
+</button>
 
                 :
 
@@ -397,6 +398,56 @@ function MockExam() {
         </div>
 
       </div>
+      {
+  showSubmitModal && (
+
+    <div className="modal-overlay">
+
+      <div className="submit-modal">
+
+        <h2>
+          Submit Test?
+        </h2>
+
+        <p>
+          Answered :
+          {
+            Object.keys(answers).length
+          }
+        </p>
+
+        <p>
+          Skipped :
+          {
+            questions.length -
+            Object.keys(answers).length
+          }
+        </p>
+
+        <div className="modal-buttons">
+
+          <button
+            onClick={() =>
+              setShowSubmitModal(false)
+            }
+          >
+            Cancel
+          </button>
+
+          <button
+            onClick={submitTest}
+          >
+            Final Submit
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  )
+}
 
     </div>
 

@@ -82,12 +82,12 @@ function MockResult() {
           </button>
 
           <button
-            onClick={() =>
-              navigate("/dashboard")
-            }
-          >
-            Dashboard
-          </button>
+  onClick={() =>
+    navigate("/")
+  }
+>
+  Home
+</button>
 
         </div>
 
