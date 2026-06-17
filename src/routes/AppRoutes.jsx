@@ -11,6 +11,7 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import MockTests from "../pages/MockTests/MockTests";
 import MockExam from "../pages/MockExam/MockExam";
 import MockResult from "../pages/MockResult/MockResult";
+import ReviewAnswers from "../pages/ReviewAnswers/ReviewAnswers";
 /* Normal User Protection */
 
 function ProtectedRoute({ children }) {
@@ -102,6 +103,10 @@ function AppRoutes() {
 <Route
   path="/mock-result/:id"
   element={<MockResult />}
+/>
+<Route
+  path="/review-answers"
+  element={<ReviewAnswers />}
 />
 
     </Routes>

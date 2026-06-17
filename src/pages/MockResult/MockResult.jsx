@@ -72,7 +72,13 @@ function MockResult() {
         </div>
 
         <div className="result-buttons">
-
+<button
+  onClick={() =>
+    navigate("/review-answers")
+  }
+>
+  View Solutions
+</button>
           <button
             onClick={() =>
               navigate("/mock-tests")
