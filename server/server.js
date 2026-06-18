@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 
 const express = require("express");
@@ -7,6 +8,9 @@ const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const app = express();
 const nodemailer = require("nodemailer");
+const multer = require("multer");
+const csv = require("csv-parser");
+const fs = require("fs");
 
 const {
   OAuth2Client
@@ -21,6 +25,9 @@ console.log(process.env.PORT);
 app.use(cors());
 app.use(express.json());
 
+const upload = multer({
+  dest: "uploads/"
+});
 /* TEST ROUTE */
 
 app.get("/", async (req, res) => {
@@ -589,6 +596,84 @@ app.delete("/admin/leads/:id", async (req, res) => {
   }
 
 });
+app.post(
+  "/admin/upload-questions",
+  upload.single("file"),
+  async (req, res) => {
+
+    const results = [];
+
+    fs.createReadStream(req.file.path)
+
+      .pipe(csv())
+
+      .on("data", (data) => {
+        results.push(data);
+      })
+
+      .on("end", async () => {
+
+        try {
+
+          for (const row of results) {
+
+            await pool.query(
+              `
+              INSERT INTO questions
+              (
+                subject,
+                chapter,
+                question,
+                option_a,
+                option_b,
+                option_c,
+                option_d,
+                correct_answer,
+                difficulty
+              )
+              VALUES
+              (
+                $1,$2,$3,$4,$5,$6,$7,$8,$9
+              )
+              `,
+              [
+                row.Subject,
+                row.Chapter,
+                row.Question,
+                row.Option_A,
+                row.Option_B,
+                row.Option_C,
+                row.Option_D,
+                row.Correct_Answer,
+                row.Difficulty
+              ]
+            );
+
+          }
+
+          fs.unlinkSync(req.file.path);
+
+          res.json({
+            success: true,
+            inserted: results.length
+          });
+
+        }
+
+        catch (err) {
+
+          console.log(err);
+
+          res.status(500).json({
+            success: false
+          });
+
+        }
+
+      });
+
+  }
+);
 app.listen(process.env.PORT, () => {
   console.log(
     `Server Running On Port ${process.env.PORT}`

@@ -19,7 +19,8 @@ function Admin() {
 
   const [leads, setLeads] = useState([]);
   const [users, setUsers] = useState([]);
-
+const [csvFile, setCsvFile] =
+  useState(null);
   useEffect(() => {
     fetchStats();
     fetchLeads();
@@ -68,7 +69,55 @@ function Admin() {
   };
 
   const deleteLead = async (id) => {
+const uploadQuestions =
+  async () => {
 
+    if (!csvFile) {
+
+      alert(
+        "Choose CSV First"
+      );
+
+      return;
+    }
+
+    const formData =
+      new FormData();
+
+    formData.append(
+      "file",
+      csvFile
+    );
+
+    try {
+
+      const res =
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/admin/upload-questions`,
+          formData,
+          {
+            headers: {
+              "Content-Type":
+                "multipart/form-data"
+            }
+          }
+        );
+
+      alert(
+        `${res.data.inserted} Questions Uploaded`
+      );
+
+    } catch (err) {
+
+      console.log(err);
+
+      alert(
+        "Upload Failed"
+      );
+
+    }
+
+  };
     const confirmDelete =
       window.confirm("Are you sure?");
 
@@ -132,6 +181,39 @@ function Admin() {
           </div>
 
         </div>
+        <div
+  style={{
+    border: "1px solid #ddd",
+    padding: "20px",
+    borderRadius: "10px",
+    marginBottom: "30px",
+  }}
+>
+
+  <h2>
+    Upload Question Bank
+  </h2>
+
+  <input
+    type="file"
+    accept=".csv"
+    onChange={(e) =>
+      setCsvFile(
+        e.target.files[0]
+      )
+    }
+  />
+
+  <br />
+  <br />
+
+  <button
+    onClick={uploadQuestions}
+  >
+    Upload CSV
+  </button>
+
+</div>
 
         <h2>Recent Counselling Leads</h2>
 
