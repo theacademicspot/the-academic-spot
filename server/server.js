@@ -674,6 +674,28 @@ app.post(
 
   }
 );
+app.get("/questions", async (req, res) => {
+
+  try {
+
+    const result =
+      await pool.query(
+        "SELECT * FROM questions ORDER BY RANDOM() LIMIT 20"
+      );
+
+    res.json(result.rows);
+
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(500).json({
+      message: "Error"
+    });
+
+  }
+
+});
 app.listen(process.env.PORT, () => {
   console.log(
     `Server Running On Port ${process.env.PORT}`
