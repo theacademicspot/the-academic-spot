@@ -26,6 +26,37 @@ function MockResult() {
       100
     ).toFixed(2);
 
+  const subjectStats = {};
+
+  result.questions?.forEach(
+    (q, index) => {
+
+      if (
+        !subjectStats[q.subject]
+      ) {
+
+        subjectStats[q.subject] = {
+          total: 0,
+          correct: 0
+        };
+
+      }
+
+      subjectStats[q.subject].total++;
+
+      if (
+        result.studentAnswers[
+          index
+        ] === q.answer
+      ) {
+
+        subjectStats[q.subject].correct++;
+
+      }
+
+    }
+  );
+
   return (
 
     <div className="result-page">
@@ -51,49 +82,119 @@ function MockResult() {
 
           <div className="result-item">
             <h3>✅ Correct</h3>
-            <p>{result.correct}</p>
+            <p>
+              {result.correct}
+            </p>
           </div>
 
           <div className="result-item">
             <h3>❌ Wrong</h3>
-            <p>{result.wrong}</p>
+            <p>
+              {result.wrong}
+            </p>
           </div>
 
           <div className="result-item">
             <h3>⏭️ Skipped</h3>
-            <p>{result.skipped}</p>
+            <p>
+              {result.skipped}
+            </p>
           </div>
 
           <div className="result-item">
             <h3>🎯 Accuracy</h3>
-            <p>{result.accuracy}%</p>
+            <p>
+              {result.accuracy}%
+            </p>
           </div>
 
         </div>
 
+        {/* SUBJECT ANALYSIS */}
+
+        <div className="subject-analysis">
+
+          <h2>
+            Subject Wise Analysis
+          </h2>
+
+          {
+
+            Object.entries(
+              subjectStats
+            ).map(
+              (
+                [subject, stats]
+              ) => (
+
+                <div
+                  key={subject}
+                  className="subject-card"
+                >
+
+                  <h3>
+                    {subject}
+                  </h3>
+
+                  <p>
+                    Correct :
+                    {" "}
+                    {stats.correct}
+                    /
+                    {stats.total}
+                  </p>
+
+                  <p>
+                    Accuracy :
+                    {" "}
+                    {
+                      (
+                        stats.correct /
+                        stats.total *
+                        100
+                      ).toFixed(2)
+                    }
+                    %
+                  </p>
+
+                </div>
+
+              )
+            )
+
+          }
+
+        </div>
+
         <div className="result-buttons">
-<button
-  onClick={() =>
-    navigate("/review-answers")
-  }
->
-  View Solutions
-</button>
+
           <button
             onClick={() =>
-              navigate("/mock-tests")
+              navigate(
+                "/review-answers"
+              )
+            }
+          >
+            View Solutions
+          </button>
+
+          <button
+            onClick={() =>
+              navigate(
+                "/mock-tests"
+              )
             }
           >
             Back To Tests
           </button>
 
           <button
-  onClick={() =>
-    navigate("/")
-  }
->
-  Home
-</button>
+            onClick={() =>
+              navigate("/")
+            }
+          >
+            Home
+          </button>
 
         </div>
 

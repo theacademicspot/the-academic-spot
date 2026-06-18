@@ -57,7 +57,7 @@ function MockExam() {
           100
         ).toFixed(2);
 
-   localStorage.setItem(
+  localStorage.setItem(
   "mockResult",
   JSON.stringify({
     correct,
@@ -65,7 +65,8 @@ function MockExam() {
     skipped,
     total: questions.length,
     accuracy,
-    studentAnswers: answers
+    studentAnswers: answers,
+    questions
   })
 );
     navigate(

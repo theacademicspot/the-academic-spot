@@ -79,3 +79,25 @@
   font-weight:600;
   cursor:pointer;
 }
+
+.subject-analysis{
+  margin-top:40px;
+}
+
+.subject-analysis h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.subject-card{
+  background:#f8fafc;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:15px;
+  border:1px solid #e5e7eb;
+}
+
+.subject-card h3{
+  color:#2563eb;
+  margin-bottom:10px;
+}
