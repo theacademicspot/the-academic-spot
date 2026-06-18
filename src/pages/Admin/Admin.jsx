@@ -67,78 +67,71 @@ const [csvFile, setCsvFile] =
       console.log(err);
     }
   };
+const uploadQuestions = async () => {
 
-  const deleteLead = async (id) => {
-const uploadQuestions =
-  async () => {
+  if (!csvFile) {
+    alert("Choose CSV First");
+    return;
+  }
 
-    if (!csvFile) {
+  const formData = new FormData();
 
-      alert(
-        "Choose CSV First"
+  formData.append(
+    "file",
+    csvFile
+  );
+
+  try {
+
+    const res =
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/admin/upload-questions`,
+        formData,
+        {
+          headers: {
+            "Content-Type":
+              "multipart/form-data"
+          }
+        }
       );
 
-      return;
-    }
-
-    const formData =
-      new FormData();
-
-    formData.append(
-      "file",
-      csvFile
+    alert(
+      `${res.data.inserted} Questions Uploaded`
     );
 
-    try {
+  } catch (err) {
 
-      const res =
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/admin/upload-questions`,
-          formData,
-          {
-            headers: {
-              "Content-Type":
-                "multipart/form-data"
-            }
-          }
-        );
+    console.log(err);
+    alert("Upload Failed");
 
-      alert(
-        `${res.data.inserted} Questions Uploaded`
-      );
+  }
 
-    } catch (err) {
+};
 
-      console.log(err);
+const deleteLead = async (id) => {
 
-      alert(
-        "Upload Failed"
-      );
+  const confirmDelete =
+    window.confirm("Are you sure?");
 
-    }
+  if (!confirmDelete) return;
 
-  };
-    const confirmDelete =
-      window.confirm("Are you sure?");
+  try {
 
-    if (!confirmDelete) return;
+    await axios.delete(
+      `${import.meta.env.VITE_API_URL}/admin/leads/${id}`
+    );
 
-    try {
+    fetchLeads();
 
-      await axios.delete(
-        `${import.meta.env.VITE_API_URL}/admin/leads/${id}`
-      );
+  } catch (err) {
 
-      fetchLeads();
+    console.log(err);
+    alert("Error deleting lead");
 
-    } catch (err) {
+  }
 
-      console.log(err);
-      alert("Error deleting lead");
-
-    }
-  };
-
+};
+  
   return (
     <>
       <Navbar />
