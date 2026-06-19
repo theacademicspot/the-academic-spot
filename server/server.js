@@ -696,6 +696,9 @@ app.get("/questions", async (req, res) => {
   }
 
 });
+app.get("/test123", (req, res) => {
+  res.send("WORKING");
+});
 app.listen(process.env.PORT, () => {
   console.log(
     `Server Running On Port ${process.env.PORT}`
