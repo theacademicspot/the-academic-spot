@@ -5,11 +5,20 @@ function ReviewAnswers() {
   const result = JSON.parse(
     localStorage.getItem("mockResult")
   );
+
+  if (!result) {
+    return (
+      <div className="review-page">
+        <h1>No Result Found</h1>
+      </div>
+    );
+  }
+
   const questions =
-  result?.questions || [];
+    result.questions || [];
 
   const studentAnswers =
-    result?.studentAnswers || {};
+    result.studentAnswers || {};
 
   return (
 
@@ -25,10 +34,19 @@ function ReviewAnswers() {
 
             const studentAnswer =
               studentAnswers[index];
-const correctAnswer =
-  ["A","B","C","D"].indexOf(
-    q.correct_answer
-  );
+
+            const correctAnswer =
+              ["A", "B", "C", "D"].indexOf(
+                q.correct_answer
+              );
+
+            const options = [
+              q.option_a,
+              q.option_b,
+              q.option_c,
+              q.option_d
+            ];
+
             return (
 
               <div
@@ -37,67 +55,43 @@ const correctAnswer =
               >
 
                 <h3>
-                  Q{index + 1}.
-                  {" "}
-                  {q.question}
+                  Q{index + 1}. {q.question}
                 </h3>
 
                 <p>
-
-                  Your Answer :
-
-                  {" "}
-
+                  <strong>
+                    Your Answer :
+                  </strong>{" "}
                   {
-                    studentAnswer !==
-                    undefined
-
-                      ?
-
-                      q.options[
-                        studentAnswer
-                      ]
-
-                      :
-
-                      "Not Attempted"
+                    studentAnswer !== undefined
+                      ? options[
+                          studentAnswer
+                        ]
+                      : "Not Attempted"
                   }
-
                 </p>
 
                 <p>
-
-                  Correct Answer :
-
-                  {" "}
-
+                  <strong>
+                    Correct Answer :
+                  </strong>{" "}
                   {
-                    q.options[
+                    options[
                       correctAnswer
                     ]
                   }
-
                 </p>
 
                 <p>
-
-                  Status :
-
+                  <strong>
+                    Status :
+                  </strong>{" "}
                   {
-
                     studentAnswer ===
                     correctAnswer
-
-                      ?
-
-                      "✅ Correct"
-
-                      :
-
-                      "❌ Wrong"
-
+                      ? "✅ Correct"
+                      : "❌ Wrong"
                   }
-
                 </p>
 
               </div>
