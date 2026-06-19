@@ -1,11 +1,12 @@
 import "./ReviewAnswers.css";
-import questions from "../MockExam/data/questions";
 
 function ReviewAnswers() {
 
   const result = JSON.parse(
     localStorage.getItem("mockResult")
   );
+  const questions =
+  result?.questions || [];
 
   const studentAnswers =
     result?.studentAnswers || {};
@@ -24,10 +25,10 @@ function ReviewAnswers() {
 
             const studentAnswer =
               studentAnswers[index];
-
-            const correctAnswer =
-              q.answer;
-
+const correctAnswer =
+  ["A","B","C","D"].indexOf(
+    q.correct_answer
+  );
             return (
 
               <div

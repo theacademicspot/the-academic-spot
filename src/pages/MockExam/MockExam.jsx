@@ -35,8 +35,11 @@ function MockExam() {
     questions.forEach((q, index) => {
 
       if (
-        answers[index] === q.answer
-      ) {
+  answers[index] ===
+  ["A","B","C","D"].indexOf(
+    q.correct_answer
+  )
+) {
         correct++;
       }
 
