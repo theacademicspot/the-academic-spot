@@ -2,14 +2,16 @@ import "./MockExam.css";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import questions from "./data/questions";
-
+import axios from "axios";
 function MockExam() {
   const [showSubmitModal, setShowSubmitModal] =
   useState(false);
   const { id } = useParams();
 
   const navigate = useNavigate();
+
+  const [questions, setQuestions] =
+  useState([]);
 
   const [currentQuestion, setCurrentQuestion] =
     useState(0);
@@ -24,7 +26,7 @@ function MockExam() {
     useState(10800);
 
   const question =
-    questions[currentQuestion];
+  questions?.[currentQuestion];
 
   const submitTest = () => {
 
@@ -74,6 +76,34 @@ function MockExam() {
     );
 
   };
+
+  useEffect(() => {
+
+  const fetchQuestions =
+    async () => {
+
+      try {
+
+        const res =
+          await axios.get(
+            `${import.meta.env.VITE_API_URL}/questions`
+          );
+
+        setQuestions(
+          res.data
+        );
+
+      } catch (err) {
+
+        console.log(err);
+
+      }
+
+    };
+
+  fetchQuestions();
+
+}, []);
 
   useEffect(() => {
 
@@ -178,6 +208,17 @@ function MockExam() {
     }
 
   };
+  if (
+  questions.length === 0
+) {
+
+  return (
+    <h2>
+      Loading Questions...
+    </h2>
+  );
+
+}
 
   return (
 
@@ -211,32 +252,30 @@ function MockExam() {
 
             <div className="options">
 
-              {question.options.map(
-                (
-                  option,
-                  index
-                ) => (
+              {[
+  question.option_a,
+  question.option_b,
+  question.option_c,
+  question.option_d
+].map(
+  (option, index) => (
 
-                  <button
-                    key={index}
-                    onClick={() =>
-                      selectOption(
-                        index
-                      )
-                    }
-                    className={
-                      answers[
-                        currentQuestion
-                      ] === index
-                        ? "selected-option"
-                        : ""
-                    }
-                  >
-                    {option}
-                  </button>
+    <button
+      key={index}
+      onClick={() =>
+        selectOption(index)
+      }
+      className={
+        answers[currentQuestion] === index
+          ? "selected-option"
+          : ""
+      }
+    >
+      {option}
+    </button>
 
-                )
-              )}
+  )
+)}
 
             </div>
 
