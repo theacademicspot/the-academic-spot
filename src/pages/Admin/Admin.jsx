@@ -21,6 +21,14 @@ function Admin() {
   const [users, setUsers] = useState([]);
 const [csvFile, setCsvFile] =
   useState(null);
+  const [subject, setSubject] =
+  useState("");
+
+const [chapter, setChapter] =
+  useState("");
+
+const [standard, setStandard] =
+  useState("");
   useEffect(() => {
     fetchStats();
     fetchLeads();
@@ -68,6 +76,12 @@ const [csvFile, setCsvFile] =
     }
   };
 const uploadQuestions = async () => {
+  if (!subject || !chapter || !standard) {
+  alert(
+    "Select Subject, Class and Chapter"
+  );
+  return;
+}
 
   if (!csvFile) {
     alert("Choose CSV First");
@@ -80,6 +94,23 @@ const uploadQuestions = async () => {
     "file",
     csvFile
   );
+  
+  formData.append(
+  "subject",
+  subject
+);
+
+formData.append(
+  "chapter",
+  chapter
+);
+
+formData.append(
+  "standard",
+  standard
+);
+
+
 
   try {
 
@@ -186,7 +217,69 @@ const deleteLead = async (id) => {
   <h2>
     Upload Question Bank
   </h2>
+<select
+  value={subject}
+  onChange={(e) =>
+    setSubject(e.target.value)
+  }
+>
+  <option value="">
+    Select Subject
+  </option>
 
+  <option value="Physics">
+    Physics
+  </option>
+
+  <option value="Chemistry">
+    Chemistry
+  </option>
+
+  <option value="Mathematics">
+    Mathematics
+  </option>
+
+  <option value="Biology">
+    Biology
+  </option>
+</select>
+
+<br />
+<br />
+
+<select
+  value={standard}
+  onChange={(e) =>
+    setStandard(e.target.value)
+  }
+>
+  <option value="">
+    Select Class
+  </option>
+
+  <option value="11">
+    11th
+  </option>
+
+  <option value="12">
+    12th
+  </option>
+</select>
+
+<br />
+<br />
+
+<input
+  type="text"
+  placeholder="Chapter Name"
+  value={chapter}
+  onChange={(e) =>
+    setChapter(e.target.value)
+  }
+/>
+
+<br />
+<br />
   <input
     type="file"
     accept=".csv"
