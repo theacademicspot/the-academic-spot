@@ -24,10 +24,56 @@ function MockExam() {
 
   const [timeLeft, setTimeLeft] =
     useState(10800);
+useEffect(() => {
 
+  const fetchQuestions =
+    async () => {
+
+      try {
+
+        const res =
+          await axios.get(
+            `${import.meta.env.VITE_API_URL}/questions`
+          );
+
+        const shuffled =
+          res.data.sort(
+            () => 0.5 - Math.random()
+          );
+
+        setQuestions(
+          shuffled.slice(0, 20)
+        );
+
+      } catch (err) {
+
+        console.log(err);
+
+      }
+
+    };
+
+  fetchQuestions();
+
+}, []);
+    
   const question =
   questions?.[currentQuestion];
 
+  if (!question) {
+
+  return (
+    <div
+      style={{
+        padding: "50px",
+        textAlign: "center"
+      }}
+    >
+      Loading Questions...
+    </div>
+  );
+
+}
   const submitTest = () => {
 
     let correct = 0;
