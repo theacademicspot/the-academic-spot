@@ -600,7 +600,11 @@ app.post(
   "/admin/upload-questions",
   upload.single("file"),
   async (req, res) => {
-
+const {
+  subject,
+  chapter,
+  standard
+} = req.body;
     const results = [];
 
     fs.createReadStream(req.file.path)
@@ -619,34 +623,36 @@ app.post(
 
             await pool.query(
               `
-              INSERT INTO questions
-              (
-                subject,
-                chapter,
-                question,
-                option_a,
-                option_b,
-                option_c,
-                option_d,
-                correct_answer,
-                difficulty
-              )
+            INSERT INTO questions
+(
+  subject,
+  standard,
+  chapter,
+  question,
+  option_a,
+  option_b,
+  option_c,
+  option_d,
+  correct_answer,
+  difficulty
+)
               VALUES
               (
                 $1,$2,$3,$4,$5,$6,$7,$8,$9
               )
               `,
               [
-                row.Subject,
-                row.Chapter,
-                row.Question,
-                row.Option_A,
-                row.Option_B,
-                row.Option_C,
-                row.Option_D,
-                row.Correct_Answer,
-                row.Difficulty
-              ]
+  subject,
+  standard,
+  chapter,
+  row.Question,
+  row.Option_A,
+  row.Option_B,
+  row.Option_C,
+  row.Option_D,
+  row.Correct_Answer,
+  row.Difficulty
+]
             );
 
           }
@@ -674,6 +680,7 @@ app.post(
 
   }
 );
+
 app.get("/questions", async (req, res) => {
 
   try {
