@@ -26,3 +26,62 @@
 .review-card p{
   margin:10px 0;
 }
+.review-options{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+margin-top:20px;
+
+}
+
+.review-option{
+
+padding:14px;
+
+border-radius:10px;
+
+border:2px solid #ddd;
+
+background:white;
+
+font-size:16px;
+
+}
+
+.correct-option{
+
+background:#d4edda;
+
+border:2px solid #28a745;
+
+color:#155724;
+
+font-weight:bold;
+
+}
+
+.wrong-option{
+
+background:#f8d7da;
+
+border:2px solid #dc3545;
+
+color:#721c24;
+
+font-weight:bold;
+
+}
+
+.status-text{
+
+margin-top:18px;
+
+font-size:18px;
+
+font-weight:bold;
+
+}
