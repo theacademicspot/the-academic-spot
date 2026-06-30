@@ -87,11 +87,16 @@ function MockExam() {
 
       try {
 
-        const res =
-          await axios.get(
-            `${import.meta.env.VITE_API_URL}/questions`
-          );
-
+        const res = await axios.get(
+  `${import.meta.env.VITE_API_URL}/questions`,
+  {
+    params: {
+      subject,
+      standard,
+      chapter
+    }
+  }
+);
         setQuestions(
           res.data
         );

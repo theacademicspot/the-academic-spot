@@ -1,33 +1,34 @@
 import "./MockTests.css";
 import { useNavigate } from "react-router-dom";
-
+import { useSearchParams } from "react-router-dom";
 function MockTests() {
 
   const navigate = useNavigate();
+const [searchParams] = useSearchParams();
 
-  const mockTests = [
-    {
-      id: 1,
-      title: "MHT CET Full Mock Test 1",
-      questions: 200,
-      duration: 180,
-      difficulty: "Easy"
-    },
-    {
-      id: 2,
-      title: "MHT CET Full Mock Test 2",
-      questions: 200,
-      duration: 180,
-      difficulty: "Medium"
-    },
-    {
-      id: 3,
-      title: "Physics Mock Test",
-      questions: 50,
-      duration: 45,
-      difficulty: "Hard"
-    }
-  ];
+const subject = searchParams.get("subject");
+const standard = searchParams.get("standard");
+const chapter = searchParams.get("chapter");
+ const mockTests = [
+  {
+    id: 1,
+    title: "Physics - Thermodynamics",
+    subject: "Physics",
+    standard: "12",
+    chapter: "Thermodynamics",
+    questions: 20,
+    duration: 180
+  },
+  {
+    id: 2,
+    title: "Chemistry - Thermodynamics",
+    subject: "Chemistry",
+    standard: "11",
+    chapter: "Thermodynamics",
+    questions: 20,
+    duration: 180
+  }
+];
 
   return (
     <div className="mock-page">
@@ -61,9 +62,11 @@ function MockTests() {
             </p>
 
             <button
-              onClick={() =>
-                navigate(`/mock-exam/${test.id}`)
-              }
+             onClick={() =>
+  navigate(
+    `/mock-exam/${test.id}?subject=${test.subject}&standard=${test.standard}&chapter=${test.chapter}`
+  )
+}
             >
               Start Test
             </button>
