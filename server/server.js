@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -683,12 +682,33 @@ const {
 
 app.get("/questions", async (req, res) => {
 
+  const {
+    subject,
+    standard,
+    chapter
+  } = req.query;
+
   try {
 
-    const result =
-      await pool.query(
-        "SELECT * FROM questions ORDER BY RANDOM() LIMIT 20"
-      );
+    const result = await pool.query(
+
+      `
+      SELECT *
+      FROM questions
+      WHERE subject = $1
+      AND standard = $2
+      AND chapter = $3
+      ORDER BY RANDOM()
+      LIMIT 20
+      `,
+
+      [
+        subject,
+        standard,
+        chapter
+      ]
+
+    );
 
     res.json(result.rows);
 
