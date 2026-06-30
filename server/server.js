@@ -679,7 +679,6 @@ const {
 
   }
 );
-
 app.get("/questions", async (req, res) => {
 
   const {
@@ -722,6 +721,74 @@ app.get("/questions", async (req, res) => {
 
   }
 
+});
+app.post("/mock-result", async (req, res) => {
+
+  const {
+    user_id,
+    subject,
+    standard,
+    chapter,
+    total_questions,
+    correct,
+    wrong,
+    skipped,
+    accuracy
+  } = req.body;
+
+  try {
+
+    await pool.query(
+
+      `
+      INSERT INTO mock_results
+      (
+        user_id,
+        subject,
+        standard,
+        chapter,
+        total_questions,
+        correct,
+        wrong,
+        skipped,
+        accuracy
+      )
+
+      VALUES
+      (
+        $1,$2,$3,$4,$5,$6,$7,$8,$9
+      )
+      `,
+
+      [
+        user_id,
+        subject,
+        standard,
+        chapter,
+        total_questions,
+        correct,
+        wrong,
+        skipped,
+        accuracy
+      ]
+
+    );
+
+    res.json({
+      success: true
+    });
+
+  }
+
+  catch(err){
+
+    console.log(err);
+
+    res.status(500).json({
+      success:false
+    });
+
+  }
 });
 app.get("/test123", (req, res) => {
   res.send("WORKING");
