@@ -59,40 +59,87 @@ function ReviewAnswers() {
                 </h3>
 
                 <p>
-                  <strong>
-                    Your Answer :
-                  </strong>{" "}
-                  {
-                    studentAnswer !== undefined
-                      ? options[
-                          studentAnswer
-                        ]
-                      : "Not Attempted"
-                  }
-                </p>
+  <strong>Your Answer :</strong>{" "}
+
+  {
+    studentAnswer === undefined
+
+      ? "Not Attempted"
+
+      : studentAnswer === correctAnswer
+
+      ? (
+          <span style={{color:"green"}}>
+            ✅ {options[studentAnswer]}
+          </span>
+        )
+
+      : (
+          <span style={{color:"red"}}>
+            ❌ {options[studentAnswer]}
+          </span>
+        )
+  }
+
+</p>
 
                 <p>
-                  <strong>
-                    Correct Answer :
-                  </strong>{" "}
-                  {
-                    options[
-                      correctAnswer
-                    ]
-                  }
-                </p>
 
+  <strong>
+    Correct Answer :
+  </strong>
+
+  <span
+    style={{
+      color:"green",
+      fontWeight:"bold"
+    }}
+  >
+
+    {" "}
+    ✅ {options[correctAnswer]}
+
+  </span>
+
+</p>
+
+                
                 <p>
-                  <strong>
-                    Status :
-                  </strong>{" "}
-                  {
-                    studentAnswer ===
-                    correctAnswer
-                      ? "✅ Correct"
-                      : "❌ Wrong"
-                  }
-                </p>
+
+<strong>Status :</strong>{" "}
+
+{
+
+studentAnswer === undefined
+
+? "⏭️ Skipped"
+
+: studentAnswer === correctAnswer
+
+? "✅ Correct"
+
+: "❌ Wrong"
+
+}
+
+</p>
+<p>
+
+<b>Subject :</b> {q.subject}
+
+</p>
+
+<p>
+
+<b>Chapter :</b> {q.chapter}
+
+</p>
+
+<p>
+
+<b>Difficulty :</b> {q.difficulty}
+
+</p>
 
               </div>
 
