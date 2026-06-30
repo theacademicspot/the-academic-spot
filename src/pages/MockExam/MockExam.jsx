@@ -35,7 +35,7 @@ const chapter = searchParams.get("chapter");
   const question =
   questions?.[currentQuestion];
 
-  const submitTest = () => {
+ const submitTest = async () => {
 
     let correct = 0;
 
@@ -81,6 +81,43 @@ const chapter = searchParams.get("chapter");
     questions
   })
 );
+try {
+
+  await axios.post(
+
+    `${import.meta.env.VITE_API_URL}/mock-result`,
+
+    {
+
+      user_id: 1,
+
+      subject,
+
+      standard,
+
+      chapter,
+
+      total_questions: questions.length,
+
+      correct,
+
+      wrong,
+
+      skipped,
+
+      accuracy
+
+    }
+
+  );
+
+}
+
+catch(err){
+
+  console.log(err);
+
+}
     navigate(
       `/mock-result/${id}`
     );
