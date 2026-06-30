@@ -7,7 +7,10 @@ function MockExam() {
   const [showSubmitModal, setShowSubmitModal] =
   useState(false);
   const { id } = useParams();
-
+const [searchParams] = useSearchParams();
+const subject = searchParams.get("subject");
+const standard = searchParams.get("standard");
+const chapter = searchParams.get("chapter");
   const navigate = useNavigate();
 
   const [questions, setQuestions] =
