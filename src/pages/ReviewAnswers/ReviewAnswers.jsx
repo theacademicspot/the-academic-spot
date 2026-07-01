@@ -1,5 +1,5 @@
 import "./ReviewAnswers.css";
-
+import { useRef } from "react";
 function ReviewAnswers() {
 
   const result = JSON.parse(
@@ -19,7 +19,7 @@ function ReviewAnswers() {
 
   const studentAnswers =
     result.studentAnswers || {};
-
+  const questionRefs = useRef([]);
   return (
 
     <div className="review-page">
@@ -27,7 +27,75 @@ function ReviewAnswers() {
       <h1>
         Review Solutions
       </h1>
+<div className="question-nav">
 
+  <h3>Questions</h3>
+
+  <div className="question-grid">
+
+    {questions.map((q, index) => {
+
+      const studentAnswer =
+        studentAnswers[index];
+
+      const correctAnswer =
+        ["A","B","C","D"].indexOf(
+          q.correct_answer
+        );
+
+      let className = "nav-question";
+
+      if(studentAnswer===undefined){
+
+        className+=" skipped";
+
+      }
+
+      else if(studentAnswer===correctAnswer){
+
+        className+=" correct";
+
+      }
+
+      else{
+
+        className+=" wrong";
+
+      }
+
+      return(
+
+        <button
+
+          key={index}
+
+          className={className}
+
+          onClick={()=>
+
+            questionRefs.current[index]
+
+            ?.scrollIntoView({
+
+              behavior:"smooth"
+
+            })
+
+          }
+
+        >
+
+          {index+1}
+
+        </button>
+
+      );
+
+    })}
+
+  </div>
+
+</div>
       {
         questions.map(
           (q, index) => {
@@ -49,10 +117,11 @@ function ReviewAnswers() {
 
             return (
 
-              <div
-                key={q.id}
-                className="review-card"
-              >
+             <div
+  key={q.id}
+  ref={(el) => (questionRefs.current[index] = el)}
+  className="review-card"
+>
 
                 <h3>
                   Q{index + 1}. {q.question}
