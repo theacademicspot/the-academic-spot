@@ -58,30 +58,45 @@ function ReviewAnswers() {
                   Q{index + 1}. {q.question}
                 </h3>
 
-                <p>
-  <strong>Your Answer :</strong>{" "}
+               <div className="review-options">
 
-  {
-    studentAnswer === undefined
+  {options.map((option, i) => {
 
-      ? "Not Attempted"
+    let className = "review-option";
 
-      : studentAnswer === correctAnswer
+    if (i === correctAnswer) {
+      className += " correct-option";
+    }
 
-      ? (
-          <span style={{color:"green"}}>
-            ✅ {options[studentAnswer]}
-          </span>
-        )
+    if (
+      studentAnswer === i &&
+      studentAnswer !== correctAnswer
+    ) {
+      className += " wrong-option";
+    }
 
-      : (
-          <span style={{color:"red"}}>
-            ❌ {options[studentAnswer]}
-          </span>
-        )
-  }
+    return (
 
-</p>
+      <div
+        key={i}
+        className={className}
+      >
+
+        <strong>
+          {["A","B","C","D"][i]}.
+        </strong>
+
+        {" "}
+
+        {option}
+
+      </div>
+
+    );
+
+  })}
+
+</div>
 
                 <p>
 

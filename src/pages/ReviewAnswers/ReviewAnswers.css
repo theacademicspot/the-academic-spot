@@ -75,3 +75,30 @@ margin-top:18px;
 font-size:18px;
 font-weight:bold;
 }
+
+.review-options{
+    margin-top:20px;
+}
+
+.review-option{
+    padding:14px;
+    margin-bottom:10px;
+    border-radius:10px;
+    border:2px solid #ddd;
+    background:white;
+    font-size:17px;
+}
+
+.correct-option{
+    background:#e9ffe9;
+    border:2px solid #27ae60;
+    color:#1d7d36;
+    font-weight:bold;
+}
+
+.wrong-option{
+    background:#ffecec;
+    border:2px solid #e74c3c;
+    color:#c0392b;
+    font-weight:bold;
+}
