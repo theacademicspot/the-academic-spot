@@ -71,17 +71,19 @@ function ReviewAnswers() {
 
           className={className}
 
-          onClick={()=>
+          onClick={() => {
 
-            questionRefs.current[index]
+  const y =
+    questionRefs.current[index].getBoundingClientRect().top +
+    window.pageYOffset -
+    140;
 
-            ?.scrollIntoView({
+  window.scrollTo({
+    top: y,
+    behavior: "smooth"
+  });
 
-              behavior:"smooth"
-
-            })
-
-          }
+}}
 
         >
 
